@@ -13,7 +13,7 @@ La DB es la **fuente de verdad**. WhatsApp es el canal. n8n ejecuta la lógica.
 ---
 
 ## 2) Entidades principales
-- **users**: David, Kamila (y potencialmente más a futuro).
+- **users**: participantes del grupo.
 - **topics**: catálogo de temas (núcleo común + especialidades).
 - **question_bank**: repositorio reutilizable de preguntas.
 - **weekly_plan**: estrategia y referencia de la semana (70/30).
@@ -21,7 +21,7 @@ La DB es la **fuente de verdad**. WhatsApp es el canal. n8n ejecuta la lógica.
 - **attempts**: cada respuesta individual (timestamp, correcto/incorrecto, origen).
 - **scores_daily**: resumen del día por usuario.
 - **scores_weekly**: resumen semanal por usuario (incluye progreso).
-- **duels**: set del sábado (mismo set para ambos).
+- **duels**: set del sábado (mismo set para todos los participantes).
 
 ---
 
@@ -30,7 +30,7 @@ La DB es la **fuente de verdad**. WhatsApp es el canal. n8n ejecuta la lógica.
 
 ### 3.1 users
 - `id` (uuid, pk)
-- `name` (text) — "David", "Kamila"
+- `name` (text) — nombre del participante
 - `phone_e164` (text, unique) — ej. "+521..."
 - `track` (text) — "mechanical" | "mechatronics"
 - `is_active` (bool, default true)
@@ -87,8 +87,8 @@ Ejemplo `strategy`:
 {
   "ratio": {"weak": 0.7, "maint": 0.3},
   "targets": {
-    "David": ["Control", "Matemáticas"],
-    "Kamila": ["Electrónica", "Control"]
+    "user_1": ["Control", "Matemáticas"],
+    "user_2": ["Electrónica", "Control"]
   },
   "notes": "Semana 3: subir precisión en Control, mantener Matemáticas"
 }

@@ -1,17 +1,15 @@
-# CENEVAL Duel System (David vs Kamila)
+# CENEVAL Duel System
 
 Sistema ligero y orientado a datos para prepararse para **CENEVAL** usando:
 - **Práctica diaria** (quizzes por WhatsApp)
 - **Retroalimentación inmediata**
 - **Aprendizaje adaptativo** (70/30 debilidades vs mantenimiento)
-- **Duelo semanal** (mismo set para ambos)
+- **Duelo semanal** (mismo set para todos los participantes)
 - **Analítica de progreso** (dashboard en Next.js)
 
-Este repo está pensado para **dos participantes**:
-- **David** (Ingeniería Mecánica)
-- **Kamila** (Ingeniería Mecatrónica)
+Este repo está pensado para **cualquier número de participantes del grupo**.
 
-Aunque cada persona reciba preguntas distintas por su especialidad, la competencia se mantiene **justa** gracias a métricas normalizadas (precisión + progreso) y un duelo semanal con el mismo set.
+Aunque cada persona reciba preguntas distintas por su especialidad, la competencia se mantiene **justa** gracias a métricas normalizadas (precisión + progreso) y un duelo semanal con el mismo set para todos.
 
 ---
 

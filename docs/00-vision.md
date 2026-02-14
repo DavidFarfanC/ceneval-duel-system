@@ -1,7 +1,7 @@
 # CENEVAL Duel System — Vision (docs/00-vision.md)
 
 ## 1) Objetivo
-Construir un sistema de estudio para CENEVAL, diseñado para **dos personas (David y Kamila)**, que combine:
+Construir un sistema de estudio para CENEVAL, diseñado para **cualquier número de personas del grupo**, que combine:
 - **práctica diaria** con preguntas tipo examen,
 - **retroalimentación inmediata**,
 - **adaptación a debilidades** (personalización),
@@ -51,7 +51,7 @@ Este sistema busca:
   - **precisión normalizada**,
   - **progreso semanal**,
   - **dominio por tema**,
-  - y un **duelo semanal** con el mismo set para ambos.
+  - y un **duelo semanal** con el mismo set para todos los participantes.
 
 ### Operación semanal
 - Generación de un **paquete semanal** de preguntas (en JSON) para reducir costos y mantener consistencia.
@@ -71,13 +71,12 @@ Este sistema busca:
 ---
 
 ## 4) Usuarios y contexto
-- **David:** Ingeniería Mecánica (más foco en mecánica/termo/fluidos/materiales según temario).
-- **Kamila:** Ingeniería Mecatrónica (más foco en electrónica/control/embebidos según temario).
-- **Núcleo común:** temas que ambos comparten (p.ej., matemáticas, física, instrumentación básica; según el temario final).
+- **Participantes del grupo:** cada persona puede tener una especialidad distinta (p.ej., mecánica, mecatrónica, electrónica, control, etc.).
+- **Núcleo común:** temas compartidos por todo el grupo (p.ej., matemáticas, física, instrumentación básica; según el temario final).
 
 El sistema debe permitir:
 - preguntas diferentes por persona (personalización),
-- y mantener competencia justa (normalización + duelo semanal).
+- y mantener competencia justa en grupo (normalización + duelo semanal).
 
 ---
 
@@ -92,7 +91,7 @@ El sistema debe permitir:
 
 ## 6) Qué NO vamos a hacer (anti-alcance)
 Para evitar sobrecomplicar el proyecto, este repositorio NO busca:
-- Ser una plataforma multiusuario pública (solo 2 usuarios).
+- Ser una plataforma multiusuario pública abierta (el alcance es para un grupo cerrado).
 - Reemplazar un curso completo o libros (esto es un sistema de práctica y medición).
 - Generar explicaciones tipo “capítulo de libro” en cada respuesta.
 - Crear un motor de IA que “califique con criterio humano” (se usa answer key).

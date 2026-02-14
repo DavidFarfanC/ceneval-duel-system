@@ -7,8 +7,7 @@ Estas reglas existen para:
 - Convertir el estudio en un juego medible con resultados semanales.
 
 Participantes:
-- David (Ing. Mecánica)
-- Kamila (Ing. Mecatrónica)
+- Miembros del grupo que se unan al sistema.
 
 ---
 
@@ -39,9 +38,8 @@ Para cada tema:
 - **% de aciertos por tema** (por persona)
 
 Se otorgan “trofeos” por tema:
-- 🏆 David gana el tema si su % es mayor
-- 🏆 Kamila gana el tema si su % es mayor
-- 🤝 Empate si la diferencia es menor a 3 puntos porcentuales
+- 🏆 Gana quien tenga el % más alto en ese tema
+- 🤝 Empate si la diferencia con el primer lugar es menor a 3 puntos porcentuales
 
 Objetivo:
 - Detectar fortalezas y debilidades específicas.
@@ -51,7 +49,7 @@ Objetivo:
 
 ### Marcador 4 — Duelo del sábado (Head-to-Head comparable)
 Cada sábado se juega un duelo:
-- **40–60 preguntas idénticas** para ambos
+- **40–60 preguntas idénticas** para todos los participantes
 - Tiempo recomendado: 60–90 min
 - Temas: núcleo común + temas más frecuentes del examen
 
@@ -94,8 +92,7 @@ Cada sábado se juega un duelo:
 ## 5) Coach Points (opcional, recomendado)
 Los coach points premian enseñar y aprender (sin reemplazar los marcadores oficiales).
 
-- Si David explica una pregunta y Kamila demuestra que entendió (la contesta bien al repetirla) → David +1
-- Si Kamila explica una pregunta y David demuestra que entendió (la contesta bien al repetirla) → Kamila +1
+- Si una persona explica una pregunta y otra demuestra que entendió (la contesta bien al repetirla) → +1 para quien explicó
 
 **Coach Points NO cambian el ranking principal**, pero aparecen en el dashboard como medalla extra.
 

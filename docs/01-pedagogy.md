@@ -59,7 +59,7 @@ Se refuerza lo débil, pero con espacio suficiente para consolidar.
 ---
 
 ## 4) Competencia justa (aunque las preguntas sean distintas)
-Como David y Kamila tienen especialidades distintas (Mecánica vs Mecatrónica), no se compite por “aciertos totales”. Se compite por métricas normalizadas.
+Como los participantes pueden tener especialidades distintas, no se compite por “aciertos totales”. Se compite por métricas normalizadas.
 
 ### Métrica A — Precisión (ranking principal)
 Precisión = correctas / respondidas
@@ -81,11 +81,11 @@ Progreso = precisión semana actual − precisión semana pasada
 
 ---
 
-## 5) Duelo semanal (mismo set para ambos)
-Para tener un “cara a cara” comparable 1:1:
+## 5) Duelo semanal (mismo set para todos)
+Para tener una comparación directa y justa:
 
 - 1 día a la semana (recomendado: sábado)
-- **40–60 preguntas idénticas** para ambos
+- **40–60 preguntas idénticas** para todos los participantes
 - Mezcla: núcleo común + temas de mayor frecuencia del examen
 
 **Por qué es clave:**  
@@ -111,8 +111,7 @@ Sin retro, el sistema se vuelve trivia. Con retro, se vuelve aprendizaje estrat�
 
 ## 7) Regla “Coach Point” (opcional, muy potente)
 Cada semana:
-- Si David explica un error de Mecánica y Kamila lo entiende → David gana **+1 coach point**
-- Si Kamila explica un error de Electrónica/Control y David lo entiende → Kamila gana **+1 coach point**
+- Si una persona explica un error y otra persona del grupo lo entiende → quien explicó gana **+1 coach point**
 
 **Por qué funciona:**  
 Explicar obliga a organizar el conocimiento y detecta vacíos (aprendizaje por autoexplicación).

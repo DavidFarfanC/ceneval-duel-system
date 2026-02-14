@@ -14,6 +14,7 @@ Fuente de verdad: banco de preguntas, planes semanales, asignaciones diarias, es
 
 4) **Dashboard (Next.js/React)**  
 Visualización de progreso, ranking (precisión/progreso), heatmap por tema, historial, preguntas falladas y resultados del duelo.
+/ide
 
 ---
 

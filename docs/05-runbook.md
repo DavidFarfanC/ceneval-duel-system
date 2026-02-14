@@ -33,7 +33,7 @@ Arquitectura: WhatsApp ↔ n8n ↔ DB ↔ Dashboard
 ### Paso A — DB lista (Supabase/Postgres)
 1) Crear proyecto en Supabase
 2) Crear tablas del modelo (ver `docs/04-data-model.md`)
-3) Insertar `users` (David y Kamila) con `phone_e164`
+3) Insertar `users` (todos los miembros del grupo que participen) con `phone_e164`
 4) Insertar `topics`
 
 **Validación**
@@ -91,7 +91,7 @@ Workflows mínimos:
 - Ustedes responden tocando una opción (cero escritura).
 - Feedback inmediato por pregunta.
 - Al final del día puede llegar resumen (si está habilitado).
-- Sábado: se manda el duelo (mismo set a ambos).
+- Sábado: se manda el duelo (mismo set para todos los participantes).
 - Domingo: retro semanal (precisión, progreso, debilidades, plan).
 
 ---
@@ -237,7 +237,7 @@ Si hay dudas:
 
 ## 8) Procedimiento antes del duelo del sábado
 - Confirmar que `duels.question_ids` está creado
-- Enviar a ambos el mismo set (ideal: interactive list A/B/C/D)
+- Enviar a todos el mismo set (ideal: interactive list A/B/C/D)
 - Validar que se registran attempts con esos `question_ids`
 - Cerrar duelo con un resumen:
   - precisión del duelo
