@@ -1,161 +1,193 @@
-# CENEVAL Duel System — WhatsApp UX Standard (docs/06-whatsapp-ux.md)
+# CENEVAL Duel System — WhatsApp UX Standard
+`docs/06-whatsapp-ux.md`
 
 ## 1) Propósito
-Este documento define un estándar único para:
+Este documento define un **estándar único y obligatorio** para:
 - cómo se envían preguntas por WhatsApp,
-- cómo se capturan respuestas (sin teclear, cuando sea posible),
+- cómo se capturan respuestas con mínima fricción,
 - cómo manejar ecuaciones (LaTeX → imagen),
-- y cómo mantener mensajes consistentes y fáciles de operar.
+- y cómo mantener consistencia operativa entre WhatsApp, n8n y la base de datos.
 
-Meta: **máxima velocidad + mínima fricción**, sin perder claridad.
+**Objetivo:** máxima velocidad, cero ambigüedad y cero desalineación al calificar.
 
 ---
 
-## 2) Estándar de mensajes (por tipo de pregunta)
+## 2) Decisiones de diseño (clave)
+Este sistema adopta una sola convención oficial:
 
-### 2.1 Opción múltiple (A/B/C/D) — estándar principal
+- Toda pregunta tiene un **QID obligatorio**.
+- Toda respuesta enviada por WhatsApp **incluye el QID**.
+- **No se confía en estado implícito** (índices, “pregunta actual”, orden de envío).
+
+> Regla de oro  
+> **Cada respuesta debe identificar inequívocamente la pregunta que responde.**
+
+---
+
+## 3) Estándar de mensajes (por tipo de pregunta)
+
+### 3.1 Opción múltiple (A/B/C/D) — estándar principal
 **Formato**
-- Mensaje con:
-  1) Texto corto: enunciado + contexto mínimo
-  2) (Opcional) imagen/diagrama
-  3) Interacción: **Interactive List** con 4 opciones: A, B, C, D
+1) Texto corto: enunciado + contexto mínimo  
+2) Identificador visible: `QID: xxxx`  
+3) (Opcional) imagen o diagrama  
+4) Interacción: **Interactive List** con 4 opciones (A, B, C, D)
 
 **Regla**
-- Siempre que exista opción A/B/C/D, se usa **Interactive List**.
-- Fallback permitido: texto `A|B|C|D` (solo si falla interactive).
+- Siempre que exista A/B/C/D → usar **Interactive List**.
+- Fallback permitido: texto plano (`A`, `B`, `C`, `D`) solo si falla interactive.
 
 **Ventajas**
-- 1 tap = 1 respuesta
-- Menos errores de parsing
-- Más constancia (fricción casi 0)
+- 1 tap = 1 respuesta  
+- Parsing simple y robusto  
+- Mayor constancia diaria (fricción casi cero)
 
 ---
 
-### 2.2 Ecuaciones complejas — imagen desde LaTeX (recomendado)
+### 3.2 Ecuaciones complejas — LaTeX renderizado a imagen (recomendado)
 Usar imagen cuando:
-- hay fracciones largas, integrales, matrices, sumatorias,
-- o cuando el texto sería ambiguo.
+- hay integrales, fracciones largas, matrices, sumatorias,
+- o cuando el texto puede inducir error visual.
 
 **Formato**
-- Mensaje con:
-  1) Texto breve: “Resuelve y elige la opción correcta”
-  2) Imagen con la ecuación (PNG)
-  3) Interactive List A/B/C/D
+1) Texto breve: “Resuelve y elige la opción correcta”  
+2) Imagen PNG con la ecuación  
+3) Interactive List A/B/C/D
 
 **Regla**
-- Si `render_mode = latex_png`, la ecuación debe venir en `latex` y la imagen se cachea con `media_id`.
+- Si `render_mode = latex_png`, la ecuación vive en el campo `latex`.
+- El `media_id` debe cachearse para reutilización.
 
 **Fallback**
-- Si falla el render/upload:
+- Si falla render o upload:
   - enviar ecuación en texto (modo degradado),
-  - mantener Interactive List.
+  - **mantener Interactive List**.
 
 ---
 
-### 2.3 Numéricas (respuesta abierta) — texto con tolerancia
-Usar solo cuando:
-- el valor numérico final sea importante,
-- y no sea fácil convertir a opción múltiple.
+### 3.3 Numéricas (respuesta abierta) — uso restringido
+Usar solo cuando **no sea viable** convertir a opción múltiple.
 
 **Formato**
-- Mensaje con:
-  1) Enunciado
-  2) Instrucción clara de formato:  
-     “Escribe solo el valor final sin unidades, redondea a 2 decimales”.
-  3) (Opcional) rango esperado como pista: “El resultado está entre 0 y 10”.
+1) Enunciado  
+2) Instrucción explícita de formato  
+   - “Escribe solo el valor final, sin unidades, redondea a 2 decimales”
+3) (Opcional) rango esperado como pista
 
 **Calificación**
-- Tolerancia: correcto si `abs(respuesta - valor) <= tol`
-- Alternativa: redondeo estricto (menos recomendado)
+- Correcto si:  
+  `abs(respuesta - valor) <= tolerancia`
 
 **Regla**
-- Las numéricas deben definir:
-  - redondeo (n decimales) y/o tolerancia
-  - si se aceptan notaciones tipo `1e-3`
+Toda pregunta numérica debe definir explícitamente:
+- número de decimales **o**
+- tolerancia numérica,
+- aceptación o no de notación científica (`1e-3`).
 
 ---
 
-## 3) Formatos recomendados de contenido
+## 4) Convención de IDs (CRÍTICO)
 
-### 3.1 Plantilla de pregunta (texto)
-- Encabezado: `Tema • Dificultad`
-- Identificador: `QID: <uuid corto o hash corto>`
-- Enunciado
-- (Opcional) recordatorio: “Responde tocando A/B/C/D”
+### 4.1 QID (Question ID)
+- Obligatorio en **todas** las preguntas.
+- Visible en el mensaje.
+- Estable y único.
 
-Ejemplo:
-- `Control • D2`
-- `QID: 8f2c`
-- “¿Cuál es la función de transferencia de un sistema de primer orden…?”
+**Formato recomendado**
+- Hash corto o UUID truncado (4–6 caracteres).
+- Ejemplos: `8f2c`, `a91e`, `c7d4`.
 
----
+**Ejemplo en mensaje**
+```
 
-### 3.2 Plantilla de feedback (respuesta del bot)
-Debe ser corto y repetible:
+Control • D2
+QID: 8f2c
+¿Cuál es la función de transferencia de un sistema de primer orden…?
 
-- Línea 1: `✅ Correcto` o `❌ Incorrecto`
-- Línea 2: `Correcta: C`
-- Línea 3–4: explicación (2–4 líneas máximo)
-- Línea final (opcional): `Puntaje hoy: 7/10 • Racha: 3`
+````
 
 ---
 
-## 4) IDs y consistencia (crítico para n8n)
-### 4.1 IDs de opciones
-Para Interactive List:
-- El `id` de cada opción debe ser exactamente:
-  - `"A"`, `"B"`, `"C"`, `"D"`
+### 4.2 IDs de opciones (Interactive List)
+Cada opción debe llevar **opción + QID** en el campo `id`.
 
-No usar IDs largos ni con espacios.
+| Opción | ID enviado |
+|------|-----------|
+| A | `A|8f2c` |
+| B | `B|8f2c` |
+| C | `C|8f2c` |
+| D | `D|8f2c` |
 
-### 4.2 Identificación de la pregunta activa
-Dos enfoques válidos (elige uno y estandariza):
-
-**A) Estado por assignment (recomendado)**
-- n8n consulta `daily_assignment.current_index` para saber qué pregunta está activa.
-- La respuesta del usuario se asume para esa pregunta activa.
-
-**B) QID en el mensaje (más robusto)**
-- El mensaje incluye `QID: xxxx`
-- En el payload de cada opción, el `id` puede codificar: `A|QID`
-  - ejemplo: `A:8f2c`
-- n8n extrae QID y califica directo.
-
-Recomendación práctica:
-- MVP: A (por simplicidad)
-- V1+: B (para evitar desalineación si el usuario responde tarde)
+**Reglas**
+- No usar espacios.
+- No usar textos largos.
+- El separador oficial es `|`.
 
 ---
 
-## 5) Ecuaciones: pipeline LaTeX → PNG → WhatsApp
+## 5) Identificación de la pregunta (decisión final)
+Se adopta **un solo enfoque oficial**:
 
-### 5.1 Campos esperados en la DB (question_bank)
-- `render_mode`: "text" | "latex_png" | "image"
-- `latex`: string LaTeX (nullable)
-- `media_id`: cache (nullable)
+### ✅ QID embebido en la respuesta
+- El mensaje muestra `QID`.
+- El `list_reply.id` viene como `OPCION|QID`.
+- n8n **no depende** de:
+  - orden de envío,
+  - índices,
+  - estado previo,
+  - timing del usuario.
+
+**Motivo**
+WhatsApp es asíncrono:
+- respuestas tardías,
+- reintentos de webhook,
+- mensajes duplicados.
+
+Este enfoque elimina esos riesgos por diseño.
+
+---
+
+## 6) Lógica esperada en n8n (resumen)
+1) Recibir payload inbound.
+2) Extraer `interactive.list_reply.id`.
+3) Separar por `|` → `opcion`, `qid`.
+4) Buscar pregunta por `qid`.
+5) Calificar contra `correct_option`.
+6) Guardar intento (idempotente por `wa_message_id`).
+7) Enviar feedback inmediato.
+
+---
+
+## 7) Ecuaciones: pipeline LaTeX → PNG → WhatsApp
+
+### 7.1 Campos esperados en `question_bank`
+- `render_mode`: `"text"` | `"latex_png"` | `"image"`
+- `latex`: string (nullable)
+- `media_id`: cache de WhatsApp (nullable)
 - `media_sha`: hash del PNG (opcional)
 
-### 5.2 Flujo (operativo)
-1) Si `render_mode = latex_png`:
-   - Si `media_id` existe → usarlo
-   - Si no existe:
-     - renderizar LaTeX a PNG
-     - subir PNG a WhatsApp → guardar `media_id`
-2) Enviar mensaje con media + Interactive List.
+---
 
-### 5.3 Reglas de estilo de LaTeX (para consistencia visual)
-- Fondo blanco, texto negro
-- Tamaño legible (evitar letra pequeña)
-- Márgenes suficientes (no recortar símbolos)
-- Exportar a PNG con ancho consistente (ej. 900–1200 px)
+### 7.2 Flujo operativo
+1) Si `render_mode = latex_png`:
+   - si `media_id` existe → reutilizar,
+   - si no:
+     - renderizar LaTeX → PNG,
+     - subir a WhatsApp,
+     - guardar `media_id`.
+2) Enviar mensaje con imagen + Interactive List.
 
 ---
 
-## 6) Ejemplos de payload inbound (simplificados)
+### 7.3 Reglas visuales para LaTeX
+- Fondo blanco, texto negro.
+- Tamaño legible (evitar letra pequeña).
+- Márgenes amplios (no recortar símbolos).
+- Ancho consistente: **900–1200 px**.
 
-> Nota: Estos ejemplos no son completos; son la parte relevante que n8n debe leer.
+---
 
-### 6.1 Interactive List reply (A/B/C/D)
+## 8) Ejemplo de payload inbound (simplificado)
 ```json
 {
   "messages": [
@@ -166,10 +198,28 @@ Recomendación práctica:
       "interactive": {
         "type": "list_reply",
         "list_reply": {
-          "id": "C",
+          "id": "C|8f2c",
           "title": "C"
         }
       }
     }
   ]
 }
+````
+
+---
+
+## 9) Regla final (no negociable)
+
+> **Si una respuesta no trae QID, no se califica.**
+
+Esto mantiene el sistema:
+
+* robusto,
+* auditable,
+* escalable,
+* y libre de errores silenciosos.
+
+```
+
+---

@@ -17,7 +17,7 @@ Visualización de progreso, ranking (precisión/progreso), heatmap por tema, his
 
 ---
 
-## 2) Diagrama de arquitectura (alto nivel)
+## 2) Diagrama de arquitectura
 ```mermaid
 flowchart LR
   WA[WhatsApp Cloud API] -->|Inbound Webhook| N8N[n8n]
